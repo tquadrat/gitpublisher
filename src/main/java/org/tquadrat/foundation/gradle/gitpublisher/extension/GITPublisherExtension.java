@@ -1,6 +1,6 @@
 /*
  * ============================================================================
- * Copyright © 2002-2021 by Thomas Thrien.
+ * Copyright © 2002-2022 by Thomas Thrien.
  * All Rights Reserved.
  * ============================================================================
  * Licensed to the public under the agreements of the GNU Lesser General Public
@@ -30,7 +30,7 @@ import org.tquadrat.foundation.gradle.gitpublisher.GITPublisherPlugin;
  *
  *  The extension for the Git publisher plugin.
  *
- *  @version $Id: GITPublisherExtension.java 956 2022-01-02 19:29:01Z tquadrat $
+ *  @version $Id: GITPublisherExtension.java 959 2022-01-02 23:09:45Z tquadrat $
  *  @author Thomas Thrien - thomas.thrien@tquadrat.org
  *  @since 0.1.0
  */
@@ -68,7 +68,8 @@ public abstract class GITPublisherExtension
     public abstract Property<Boolean> getDebugFlag();
 
     /**
-     *  {@summary The "DryRun" flag.} No cleanup is performed after a dry-run.
+     *  <p>{@summary The "DryRun" flag.} No cleanup is performed after a
+     *  dry-run.</p>
      *
      *  @return If the
      *      {@link Property}
@@ -91,7 +92,7 @@ public abstract class GITPublisherExtension
 
     /**
      *  <p>{@summary The names of the files and folders that will not be
-     *  published.}<p/>
+     *  published.}</p>
      *  <p>In fact each of this list is a <i>pattern</i> for a file or folder
      *  name, and these these patterns follow the syntax as for the argument
      *  for
@@ -108,7 +109,7 @@ public abstract class GITPublisherExtension
 
     /**
      *  The folder with the files that are published in the root of the Git
-     *  repository (for example the {@code README.MD}).
+     *  repository (for example the {@code README.md}).
      *
      *  @return The
      *      {@link Property}
@@ -135,7 +136,7 @@ public abstract class GITPublisherExtension
     public abstract Property<URI> getRemoteRepositoryURI();
 
     /**
-     *  <p>{@summary The names of the files and folders to publish.}<p/>
+     *  <p>{@summary The names of the files and folders to publish.}</p>
      *  <p>In fact each entry contains a <i>pattern</i> for a file or folder
      *  name, and these these patterns follow the syntax as for the
      *  argument for

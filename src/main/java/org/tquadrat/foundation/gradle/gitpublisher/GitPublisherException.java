@@ -24,7 +24,7 @@ import org.eclipse.jgit.api.errors.GitAPIException;
  *  {@link org.eclipse.jgit.api.errors.GitAPIException}
  *  for this plugin.
  *
- *  @version $Id: GitPublisherException.java 956 2022-01-02 19:29:01Z tquadrat $
+ *  @version $Id: GitPublisherException.java 959 2022-01-02 23:09:45Z tquadrat $
  *  @author Thomas Thrien - thomas.thrien@tquadrat.org
  *  @since 0.1.0
  */
@@ -48,6 +48,7 @@ public final class GitPublisherException extends GitAPIException
      *  @param  message The detail message.
      *  @param  cause   The cause.
      */
+    @SuppressWarnings( "unused" )
     public GitPublisherException( final String message, final Throwable cause ) { super( message, cause ); }
 }
 //  class GitPublisherException

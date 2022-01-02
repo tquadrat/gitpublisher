@@ -1,6 +1,6 @@
 /*
  * ============================================================================
- * Copyright © 2002-2021 by Thomas Thrien.
+ * Copyright © 2002-2022 by Thomas Thrien.
  * All Rights Reserved.
  * ============================================================================
  * Licensed to the public under the agreements of the GNU Lesser General Public
@@ -68,7 +68,7 @@ import org.tquadrat.foundation.gradle.gitpublisher.GitPublisherException;
  *  The definition of the task that does the work for the plugin
  *  {@link org.tquadrat.foundation.gradle.gitpublisher.GITPublisherPlugin}.
  *
- *  @version $Id: PublishToGIT.java 956 2022-01-02 19:29:01Z tquadrat $
+ *  @version $Id: PublishToGIT.java 959 2022-01-02 23:09:45Z tquadrat $
  *  @author Thomas Thrien - thomas.thrien@tquadrat.org
  */
 public abstract class PublishToGIT extends DefaultTask
@@ -282,7 +282,7 @@ public abstract class PublishToGIT extends DefaultTask
 
     /**
      *  <p>{@summary The names of the files and folders that will not be
-     *  published.}<p/>
+     *  published.}</p>
      *  <p>In fact each of this list is a <i>pattern</i> for a file or folder
      *  name, and these these patterns follow the syntax as for the argument
      *  for
@@ -344,7 +344,7 @@ public abstract class PublishToGIT extends DefaultTask
     public abstract Property<URI> getRemoteRepositoryURI();
 
     /**
-     *  <p>{@summary The names of the files and folders to publish.}<p/>
+     *  <p>{@summary The names of the files and folders to publish.}</p>
      *  <p>In fact each entry contains a <i>pattern</i> for a file or folder
      *  name, and these these patterns follow the syntax as for the
      *  argument for
@@ -519,7 +519,7 @@ public abstract class PublishToGIT extends DefaultTask
             .getAbsoluteFile()
             .toPath();
 
-        if( m_IsDebug ) out.printf( "-> Work Folder: %s%n", baseFolder.toString() );
+        if( m_IsDebug ) out.printf( "-> Work Folder: %s%n", baseFolder );
 
         if( !Files.exists( baseFolder ) )
         {
@@ -581,7 +581,7 @@ public abstract class PublishToGIT extends DefaultTask
 
                 if( m_IsDebug )
                 {
-                    out.printf( "-> The Contents of the Repository Folder: %s%n", targetFolder.toString() );
+                    out.printf( "-> The Contents of the Repository Folder: %s%n", targetFolder );
                     listFiles( targetFolder, targetFolder );
                 }
 
@@ -638,6 +638,7 @@ public abstract class PublishToGIT extends DefaultTask
 
                     //---* Commit the changes *--------------------------------
                     if( m_IsDebug ) out.println( "-> COMMIT" );
+                    @SuppressWarnings( "unused" )
                     final var commit = git.commit()
                         .setMessage( getCommitMessage().get() )
                         .call();
@@ -652,6 +653,7 @@ public abstract class PublishToGIT extends DefaultTask
 
                     //---* Push the project *----------------------------------
                     if( m_IsDebug ) out.println( "-> PUSH" );
+                    @SuppressWarnings( "unused" )
                     final var pushResult = git.push()
                         .setDryRun( dryRun )
                         .setCredentialsProvider( credentialsProvider )
@@ -678,11 +680,10 @@ public abstract class PublishToGIT extends DefaultTask
      *
      *  @param  sourcesList The
      *      {@link Provider}
-     *      instance for the file to parse.
+     *      instance for the list to parse.
      *  @return The patterns.
-     *  @throws IOException Cannot read the given file.
      */
-    private final Collection<PathMatcher> parseFilePatternList( final Provider<List<String>> sourcesList ) throws IOException
+    private final Collection<PathMatcher> parseFilePatternList( final Provider<List<String>> sourcesList )
     {
         var retValue = List.<PathMatcher>of();
         if( sourcesList.isPresent() )

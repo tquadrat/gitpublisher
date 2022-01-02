@@ -1,6 +1,6 @@
 /*
  * ============================================================================
- *  Copyright © 2002-2021 by Thomas Thrien.
+ *  Copyright © 2002-2022 by Thomas Thrien.
  *  All Rights Reserved.
  * ============================================================================
  *  Licensed to the public under the agreements of the GNU Lesser General Public
@@ -27,39 +27,18 @@ import org.tquadrat.foundation.gradle.gitpublisher.task.PublishToGIT;
  *  {@link GITPublisherPlugin}
  *  that publishes a project to GitHub.
  *
- *  @version $Id: GITPublisherBasePlugin.java 956 2022-01-02 19:29:01Z tquadrat $
+ *  @version $Id: GITPublisherBasePlugin.java 959 2022-01-02 23:09:45Z tquadrat $
  *  @author Thomas Thrien - thomas.thrien@tquadrat.org
  */
 public final class GITPublisherBasePlugin implements Plugin<Project>
 {
-        /*---------------*\
-    ====** Inner Classes **====================================================
-        \*---------------*/
-
         /*-----------*\
     ====** Constants **========================================================
         \*-----------*/
     /**
-     *  The name of the dependency to JGit: {@value}.
-     */
-    public static final String DEPENDENCY_JGIT = "jgit";
-
-    /**
      *  The name of the &quot;publish&quot; task: {@value}.
      */
     public static final String PUBLISH_TASK = PublishToGIT.TASK_NAME;
-
-        /*------------*\
-    ====** Attributes **=======================================================
-        \*------------*/
-
-        /*------------------------*\
-    ====** Static Initialisations **===========================================
-        \*------------------------*/
-
-        /*--------------*\
-    ====** Constructors **=====================================================
-        \*--------------*/
 
         /*---------*\
     ====** Methods **==========================================================

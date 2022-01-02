@@ -58,7 +58,7 @@ import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
 /**
  *  A playground for experiments with JGit.
  *
- *  @version $Id: GitPlayground.java 956 2022-01-02 19:29:01Z tquadrat $
+ *  @version $Id: GitPlayground.java 959 2022-01-02 23:09:45Z tquadrat $
  *  @author Thomas Thrien - thomas.thrien@tquadrat.org
  *  @since 0.1.0
  */
@@ -98,7 +98,8 @@ public class GitPlayground
     static
     {
         final var fileSystem = FileSystems.getDefault();
-        m_IgnoredFiles = Stream.<String>of( ".git", "dummy" )
+        //noinspection ConstantConditions
+        m_IgnoredFiles = Stream.of( ".git", "dummy" )
             .filter( Objects::nonNull )
             .filter( p -> !p.isBlank() )
             .map( p -> p.startsWith( "glob:" ) || p.startsWith( "regex:" ) ? p : "glob:%s".formatted( p ) )
@@ -142,6 +143,7 @@ public class GitPlayground
      *  @throws IOException Cannot collect the files from the given source
      *      folder.
      */
+    @SuppressWarnings( "SameParameterValue" )
     private static Collection<Path> getFileList( final Path source, final List<PathMatcher> ignoredFiles ) throws IOException
     {
         return getFileList( source, source, ignoredFiles );
@@ -187,6 +189,7 @@ public class GitPlayground
      *  @return {@code true} if the file has to be ignored, {@code false}
      *      otherwise.
      */
+    @SuppressWarnings( "BooleanMethodIsAlwaysInverted" )
     private static final boolean isIgnored( final Path file, final List<PathMatcher> ignoredFiles )
     {
         final var retValue = ignoredFiles.stream()
@@ -233,7 +236,7 @@ public class GitPlayground
         final Stack<Path> forRemoval = new Stack<>();
         final var cleanup = true;
 
-        Path baseFolder = null;
+        Path baseFolder;
         Path targetFolder = null;
         try
         {
@@ -330,7 +333,7 @@ public class GitPlayground
                     .call();
                 printStatus( out, status );
 
-                out.printf( "-> Relevant Files in %s%n", targetFolder.toString() );
+                out.printf( "-> Relevant Files in %s%n", targetFolder );
                 for( var file : getFileList( targetFolder, m_IgnoredFiles ) )
                 {
                     out.printf( "    | %s%n", file.toString() );
@@ -397,6 +400,7 @@ public class GitPlayground
      *  @param  commit  The commit to dump.
      *  @throws IOException Cannot write to the output target.
      */
+    @SuppressWarnings( "SameParameterValue" )
     private static void printCommit( final Appendable out, final RevCommit commit ) throws IOException
     {
         final var frame = "    | %s%n";
@@ -437,6 +441,7 @@ public class GitPlayground
      *  @param  status  The status to dump.
      *  @throws IOException Cannot write to the output target.
      */
+    @SuppressWarnings( "SameParameterValue" )
     private static void printStatus( final Appendable out, final Status status ) throws IOException
     {
         for( final var s : status.getAdded() )       out.append( "    | A %s%n".formatted( s ) );

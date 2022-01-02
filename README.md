@@ -1,6 +1,6 @@
 # gitpublisher
 
-I still have a strong preference for Subversion as my source code repository, and for my (private) projects, I have setup a private Subversion server somewhere in the internet.
+I still have a strong preference for Subversion as my source code repository, and for my (private) projects, I have set up a private Subversion server somewhere in the internet.
 
 But for publishing those projects and the related sources to the public domain, nowadays Git is the tool of choice and GitHub is one of the platforms to be.
 
