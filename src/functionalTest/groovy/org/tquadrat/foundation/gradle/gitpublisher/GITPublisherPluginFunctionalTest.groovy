@@ -51,7 +51,7 @@ class GITPublisherPluginFunctionalTest extends Specification {
         }
     }   //  copyFolder()
 
-    boolean debug = true;
+    boolean debug = false;
     boolean dryRun = false;
 
     def "can run task"() {
@@ -73,8 +73,6 @@ plugins {
 
 //---> Begin of build file <---------------------------------------------------
         buildFile << """
-import java.nio.file.Files;
-
 plugins {
     id  'nu.studer.credentials'
     id  'org.tquadrat.foundation.gradle.gitpublisher'

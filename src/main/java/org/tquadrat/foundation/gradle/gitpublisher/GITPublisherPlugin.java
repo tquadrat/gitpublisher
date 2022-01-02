@@ -98,11 +98,7 @@ public final class GITPublisherPlugin implements Plugin<Project>
      *  The prefix for the default name of the folder for the working copy of
      *  the Git repository.
      */
-    public static final String TARGET_NAME = "tempGit";
-
-        /*------------*\
-    ====** Attributes **=======================================================
-        \*------------*/
+    public static final String TARGET_NAME = "tempGit_";
 
         /*------------------------*\
     ====** Static Initialisations **===========================================
