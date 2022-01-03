@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"org.tquadrat.foundation.gradle.gitpublisher"},{"l":"org.tquadrat.foundation.gradle.gitpublisher.extension"},{"l":"org.tquadrat.foundation.gradle.gitpublisher.task"}];updateSearchResults();

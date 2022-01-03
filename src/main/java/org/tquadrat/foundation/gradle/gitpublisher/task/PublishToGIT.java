@@ -783,7 +783,7 @@ public abstract class PublishToGIT extends DefaultTask
                     Files.createDirectories( target.getParent() );
                     Files.copy( source, target, REPLACE_EXISTING, COPY_ATTRIBUTES );
                     Files.setLastModifiedTime( target, Files.getLastModifiedTime( source ) );
-                    filesToCopy.add( path );
+                    filesToCopy.add( targetFolder.relativize( target ) );
                 }
             }
         }
