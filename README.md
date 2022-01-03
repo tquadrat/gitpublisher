@@ -61,7 +61,12 @@ tasks.named( 'publishToGIT' ) {
         // be kept after the plugin has finished.
     metaDir = new File( """
         A folder with additional files; see below! The default is $PROJECT/gitMeta.
-        """    
+        """  
+    javadocLocation = new File( """
+        If specified, the contents of this folder will be copied to the folder
+        'javadoc' in the respository. A relative path will be resolved against
+        the $PROJECT folder.
+        """  
 } 
 ```
 
