@@ -36,8 +36,11 @@ class GITPublisherPluginFunctionalTest extends Specification {
         Files.createDirectories( target )
         for( path in Files.list( source ) )
         {
-            if( source.relativize(path).toString() == "settings.gradle" ) continue
-            if( source.relativize(path).toString() == "build.gradle" ) continue
+            if( !source.toString().endsWith( "gitMeta" ) )
+            {
+                if( source.relativize(path).toString() == "settings.gradle" ) continue
+                if( source.relativize(path).toString() == "build.gradle" ) continue
+            }
 
             var destination = target.resolve( source.relativize( path ) )
             if( Files.isDirectory( path ) )
