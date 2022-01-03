@@ -24,6 +24,7 @@ import org.eclipse.jgit.transport.CredentialsProvider;
 import org.gradle.api.Project;
 import org.gradle.api.provider.ListProperty;
 import org.gradle.api.provider.Property;
+import org.gradle.api.tasks.InputDirectory;
 import org.tquadrat.foundation.gradle.gitpublisher.GITPublisherPlugin;
 
 /**
@@ -106,6 +107,17 @@ public abstract class GITPublisherExtension
      *      for the ignores list.
      */
     public abstract ListProperty<String> getIgnoresList();
+
+    /**
+     *  <p>{@summary Returns the Javadoc location.} The contents of the given
+     *  folder will be copied to the {@code javadoc} folder in the target
+     *  repository.</p>
+     *
+     *  @return The
+     *      {@link Property}
+     *      for the location of the Javadoc location.
+     */
+    public abstract Property<File> getJavadocLocation();
 
     /**
      *  The folder with the files that are published in the root of the Git

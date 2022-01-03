@@ -59,6 +59,7 @@ public final class GITPublisherBasePlugin implements Plugin<Project>
             task.getDebugFlag().set( extension.getDebugFlag() );
             task.getDryRunFlag().set( extension.getDryRunFlag() );
             task.getIgnoresList().set( extension.getIgnoresList() );
+            task.getJavadocLocation().set( extension.getJavadocLocation() );
             task.getLocalRepositoryFolder().set( extension.getLocalRepositoryFolder() );
             task.getMetaDir().set( extension.getMetaDir() );
             task.getMustCleanupFlag().set( extension.getMustCleanupFlag() );

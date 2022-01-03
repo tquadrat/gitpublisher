@@ -94,7 +94,7 @@ tasks.named( 'publishToGIT' ) {
         "# The source files to Publish",
         "src/**"
     ]
-//    remoteRepositoryURI = new URI( "https://github.com/tquadrat/Playground" )
+    javadocLocation = new File( "${new File( projectDir, "build/docs/javadoc" ).getAbsolutePath()}" )
     remoteRepositoryURI = new URI( "https://github.com/tquadrat/gitpublisher" )
 } 
 """

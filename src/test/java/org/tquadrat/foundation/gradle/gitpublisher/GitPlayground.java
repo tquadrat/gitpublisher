@@ -1,6 +1,6 @@
 /*
  * ============================================================================
- * Copyright © 2002-2021 by Thomas Thrien.
+ * Copyright © 2002-2022 by Thomas Thrien.
  * All Rights Reserved.
  * ============================================================================
  * Licensed to the public under the agreements of the GNU Lesser General Public
@@ -69,10 +69,6 @@ import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
  */
 public class GitPlayground
 {
-        /*---------------*\
-    ====** Inner Classes **====================================================
-        \*---------------*/
-
         /*-----------*\
     ====** Constants **========================================================
         \*-----------*/
@@ -87,10 +83,6 @@ public class GitPlayground
             .appendValue( INSTANT_SECONDS )
             .toFormatter();
     }
-
-        /*------------*\
-    ====** Attributes **=======================================================
-        \*------------*/
 
         /*------------------------*\
     ====** Static Initialisations **===========================================
@@ -111,10 +103,6 @@ public class GitPlayground
             .map( fileSystem::getPathMatcher )
             .toList();
     }
-
-        /*--------------*\
-    ====** Constructors **=====================================================
-        \*--------------*/
 
         /*---------*\
     ====** Methods **==========================================================
@@ -275,7 +263,7 @@ public class GitPlayground
             final var credentialsProvider = new UsernamePasswordCredentialsProvider( "Token", accessToken );
 
             //---* Clone the remote repository *-------------------------------
-            out.println( "\n-> Cloning the repository");
+            out.println( "\n-> Cloning the repository" );
             Git git = Git.cloneRepository()
                 .setURI( remoteRepositoryURI.toString() )
                 .setDirectory( targetFolder.toFile() )

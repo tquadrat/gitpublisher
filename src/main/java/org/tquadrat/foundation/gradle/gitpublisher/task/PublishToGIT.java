@@ -300,6 +300,19 @@ public abstract class PublishToGIT extends DefaultTask
     public abstract ListProperty<String> getIgnoresList();
 
     /**
+     *  <p>{@summary Returns the Javadoc location.} The contents of the given
+     *  folder will be copied to the {@code javadoc} folder in the target
+     *  repository.</p>
+     *
+     *  @return The
+     *      {@link Property}
+     *      for the location of the Javadoc location.
+     */
+    @InputDirectory
+    @org.gradle.api.tasks.Optional
+    public abstract Property<File> getJavadocLocation();
+
+    /**
      *  The name of the target folder for the temporary local Git repository.
      *
      *  @return The
@@ -738,6 +751,8 @@ public abstract class PublishToGIT extends DefaultTask
             Files.copy( source, target, REPLACE_EXISTING, COPY_ATTRIBUTES );
             Files.setLastModifiedTime( target, Files.getLastModifiedTime( source ) );
         }
+
+        //---* Copy the files from the meta folder *---------------------------
         final var metaFolder = getMetaDir().getOrElse( new File( project.getProjectDir(), META_DIR_NAME ) ).toPath();
         if( Files.exists( metaFolder ) )
         {
@@ -747,11 +762,34 @@ public abstract class PublishToGIT extends DefaultTask
                 final var target = targetFolder.resolve( path );
                 Files.createDirectories( target.getParent() );
                 Files.copy( source, target, REPLACE_EXISTING, COPY_ATTRIBUTES );
+                Files.setLastModifiedTime( target, Files.getLastModifiedTime( source ) );
                 filesToCopy.add( path );
             }
         }
 
+        //---* Copy the Javadoc files *----------------------------------------
+        if( getJavadocLocation().isPresent() )
+        {
+            final var directory = getJavadocLocation().get().toPath();
+            final var javadocSource = directory.isAbsolute() ? directory : sourceFolder.resolve( directory );
+            if( Files.isDirectory( javadocSource ) )
+            {
+                final var javadocTarget = targetFolder.resolve( "javadoc" );
+                Files.createDirectories( javadocTarget );
+                for( final var path : createFileList( javadocSource, List.of(), excludes ) )
+                {
+                    final var source = javadocSource.resolve( path );
+                    final var target = javadocTarget.resolve( path );
+                    Files.createDirectories( target.getParent() );
+                    Files.copy( source, target, REPLACE_EXISTING, COPY_ATTRIBUTES );
+                    Files.setLastModifiedTime( target, Files.getLastModifiedTime( source ) );
+                    filesToCopy.add( path );
+                }
+            }
+        }
+
         //---* Take care of the dangling files *-------------------------------
+
         for( final var path : createFileList( targetFolder, List.of(), excludes ) )
         {
             if( !filesToCopy.contains( path ) )
