@@ -18,7 +18,11 @@
 package org.tquadrat.foundation.gradle.gitpublisher;
 
 import static java.lang.System.err;
+import static java.lang.System.getProperty;
 import static java.lang.System.out;
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static java.nio.file.Files.createDirectories;
+import static java.nio.file.Files.createFile;
 import static java.nio.file.Files.createTempDirectory;
 import static java.nio.file.Files.deleteIfExists;
 import static java.nio.file.Files.exists;
@@ -47,6 +51,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Properties;
 import java.util.Stack;
 import java.util.stream.Stream;
 
@@ -257,13 +262,10 @@ public class GitPlayground
             final var remoteRepositoryURI = new URI( "https://github.com/tquadrat/Playground.git" );
             out.printf( "Remote Repository URI    : %s%n", remoteRepositoryURI );
 
-            final var userName = "tquadrat";
-            final var password = "github_#Tan88go";
-            out.printf( "User name                 : %s%n", userName );
-            out.printf( "Password                  : %s%n", password );
-
-            @SuppressWarnings( "SpellCheckingInspection" )
-            final var accessToken = "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"; // expires 2022-01-26;
+            final var credentialsFile = Paths.get( getProperty( "user.home", "." ), "github.credentials" );
+            final var credentials = new Properties();
+            credentials.load(  Files.newBufferedReader( credentialsFile, UTF_8 ) );
+            final var accessToken = credentials.getProperty( "token" );
             out.printf( "Access Token              : %s%n", accessToken );
 
             final var emailAddress = "thomas.thrien@tquadrat.org";
@@ -308,6 +310,8 @@ public class GitPlayground
                 final var fileName = "dummy/File_%s.txt".formatted( TIMESTAMP_FORMATTER.format( Instant.now() ) );
                 final var newFile = targetFolder.resolve( fileName );
                 out.printf( "    | %s%n", fileName );
+                createDirectories( newFile.getParent() );
+                createFile( newFile );
                 writeString( newFile, "Created on %s%n".formatted( ZonedDateTime.now().toString() ), CREATE );
                 git.add()
                     .setUpdate( false )
@@ -343,7 +347,7 @@ public class GitPlayground
                 //---* Push the project *--------------------------------------
                 out.println( "-> Push" );
                 final var pushResult = git.push()
-                    .setDryRun( true )
+                    .setDryRun( false )
                     .setCredentialsProvider( credentialsProvider )
                     .call();
                 for( final var result : pushResult )
@@ -444,13 +448,16 @@ public class GitPlayground
     @SuppressWarnings( "SameParameterValue" )
     private static void printStatus( final Appendable out, final Status status ) throws IOException
     {
-        for( final var s : status.getAdded() )       out.append( "    | A %s%n".formatted( s ) );
-        for( final var s : status.getChanged() )     out.append( "    | C %s%n".formatted( s ) );
-        for( final var s : status.getConflicting() ) out.append( "    | X %s%n".formatted( s ) );
-        for( final var s : status.getMissing() )     out.append( "    | # %s%n".formatted( s ) );
-        for( final var s : status.getModified() )    out.append( "    | M %s%n".formatted( s ) );
-        for( final var s : status.getRemoved() )     out.append( "    | R %s%n".formatted( s ) );
-        for( final var s : status.getUntracked() )   out.append( "    | U %s%n".formatted( s ) );
+        for( final var s : status.getAdded() )              out.append( "    | A %s%n".formatted( s ) );
+        for( final var s : status.getChanged() )            out.append( "    | C %s%n".formatted( s ) );
+        for( final var s : status.getConflicting() )        out.append( "    | X %s%n".formatted( s ) );
+        for( final var s : status.getIgnoredNotInIndex() )  out.append( "    | i %s%n".formatted( s ) );
+        for( final var s : status.getMissing() )            out.append( "    | # %s%n".formatted( s ) );
+        for( final var s : status.getModified() )           out.append( "    | M %s%n".formatted( s ) );
+        for( final var s : status.getRemoved() )            out.append( "    | R %s%n".formatted( s ) );
+        for( final var s : status.getUncommittedChanges() ) out.append( "    | U %s%n".formatted( s ) );
+        for( final var s : status.getUntracked() )          out.append( "    | u %s%n".formatted( s ) );
+        for( final var s : status.getUntrackedFolders() )   out.append( "    | f %s%n".formatted( s ) );
     }   //  printStatus()
 }
 //  class GitPlayground
