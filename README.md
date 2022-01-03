@@ -14,6 +14,9 @@ Basically, it works like this:
  4. Push the repository.
  5. Cleanup by removing the temporary folder.
 
+## Documentation
+The [Javadoc Reference Documentation](https://htmlpreview.github.io/?https://github.com/tquadrat/gitpublisher/blob/master/javadoc/index.html) gives some more insight.
+
 ## Configuration
 
  - Add the following lines to your `build.gradle`:
