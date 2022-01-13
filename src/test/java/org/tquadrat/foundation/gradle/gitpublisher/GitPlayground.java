@@ -63,7 +63,7 @@ import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
 /**
  *  A playground for experiments with JGit.
  *
- *  @version $Id: GitPlayground.java 959 2022-01-02 23:09:45Z tquadrat $
+ *  @version $Id: GitPlayground.java 964 2022-01-03 12:06:13Z tquadrat $
  *  @author Thomas Thrien - thomas.thrien@tquadrat.org
  *  @since 0.1.0
  */

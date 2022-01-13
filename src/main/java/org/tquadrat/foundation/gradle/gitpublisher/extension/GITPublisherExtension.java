@@ -24,14 +24,13 @@ import org.eclipse.jgit.transport.CredentialsProvider;
 import org.gradle.api.Project;
 import org.gradle.api.provider.ListProperty;
 import org.gradle.api.provider.Property;
-import org.gradle.api.tasks.InputDirectory;
 import org.tquadrat.foundation.gradle.gitpublisher.GITPublisherPlugin;
 
 /**
  *
  *  The extension for the Git publisher plugin.
  *
- *  @version $Id: GITPublisherExtension.java 959 2022-01-02 23:09:45Z tquadrat $
+ *  @version $Id: GITPublisherExtension.java 964 2022-01-03 12:06:13Z tquadrat $
  *  @author Thomas Thrien - thomas.thrien@tquadrat.org
  *  @since 0.1.0
  */

@@ -27,7 +27,7 @@ import org.tquadrat.foundation.gradle.gitpublisher.task.PublishToGIT;
  *  {@link GITPublisherPlugin}
  *  that publishes a project to GitHub.
  *
- *  @version $Id: GITPublisherBasePlugin.java 959 2022-01-02 23:09:45Z tquadrat $
+ *  @version $Id: GITPublisherBasePlugin.java 964 2022-01-03 12:06:13Z tquadrat $
  *  @author Thomas Thrien - thomas.thrien@tquadrat.org
  */
 public final class GITPublisherBasePlugin implements Plugin<Project>

@@ -54,7 +54,7 @@ class GITPublisherPluginFunctionalTest extends Specification {
         }
     }   //  copyFolder()
 
-    boolean debug = true
+    boolean debug = false
     boolean dryRun = false
 
     def "can run task"() {
