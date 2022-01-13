@@ -20,7 +20,7 @@ The [Javadoc Reference Documentation](https://tquadrat.github.io/gitpublisher/ja
 ## Configuration
 
  - Add the following lines to your `build.gradle`:
-    ```
+    ```Groovy
     plugins {
         id  'org.tquadrat.foundation.gradle.gitpublisher'
     }
