@@ -313,6 +313,30 @@ public abstract class PublishToGIT extends DefaultTask
     public abstract Property<File> getJavadocLocation();
 
     /**
+     *  <p>{@summary The names of the files and folders to keep in the
+     *  repository even without a corresponding file or folder in the
+     *  source.} Usually, files in the repository will be removed from it
+     *  when there is no corresponding entry in the source, because the
+     *  assumption is that such a file was removed from the source. But some
+     *  files may come from different build environments and should not be
+     *  removed.</p>
+     *  <p>Each entry contains a <i>pattern</i> for a file or folder
+     *  name, and these these patterns follow the syntax as for the
+     *  argument for
+     *  {@link java.nio.file.FileSystem#getPathMatcher(String)},
+     *  only that the syntax prefix @quot;{@code glob:}&quot; can be
+     *  omitted.</p>
+     *  <p>All names are relative to the repository's root folder.</p>
+     *
+     *  @return The
+     *      {@link Property}
+     *      for the &quot;keep&quot; list.
+     */
+    @Input
+    @org.gradle.api.tasks.Optional
+    public abstract ListProperty<String> getKeep();
+
+    /**
      *  The name of the target folder for the temporary local Git repository.
      *
      *  @return The
@@ -739,6 +763,13 @@ public abstract class PublishToGIT extends DefaultTask
         excludes.addAll( alwaysIgnored() );
         excludes = List.copyOf( excludes );
 
+        /*
+         * Load the names for the files to keep in the repository.
+         * A file in the repository without a corresponding file in the source
+         * would be otherwise removed.
+         */
+        final var keeps = parseFilePatternList( getKeep() );
+
         //---* Copy the project files *----------------------------------------
         final var sourceFolder = project.getProjectDir().toPath();
         final Set<Path> filesToCopy = new HashSet<>();
@@ -789,13 +820,19 @@ public abstract class PublishToGIT extends DefaultTask
         }
 
         //---* Take care of the dangling files *-------------------------------
-
         for( final var path : createFileList( targetFolder, List.of(), excludes ) )
         {
             if( !filesToCopy.contains( path ) )
             {
-                if( m_IsDebug ) out.printf( "    --- Deleted dangling File: %s%n", path.toString() );
-                Files.deleteIfExists( targetFolder.resolve( path ) );
+                if( keeps.stream().anyMatch( pathMatcher -> pathMatcher.matches( path ) ) )
+                {
+                    if( m_IsDebug ) out.printf( "    --- Keeping dangling File: %s%n", path.toString() );
+                }
+                else
+                {
+                    if( m_IsDebug ) out.printf( "    --- Deleted dangling File: %s%n", path.toString() );
+                    Files.deleteIfExists( targetFolder.resolve( path ) );
+                }
             }
         }
     }   //  transferFiles()

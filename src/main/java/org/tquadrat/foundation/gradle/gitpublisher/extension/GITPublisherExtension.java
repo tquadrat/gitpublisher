@@ -119,6 +119,28 @@ public abstract class GITPublisherExtension
     public abstract Property<File> getJavadocLocation();
 
     /**
+     *  <p>{@summary The names of the files and folders to keep in the
+     *  repository even without a corresponding file or folder in the
+     *  source.} Usually, files in the repository will be removed from it
+     *  when there is no corresponding entry in the source, because the
+     *  assumption is that such a file was removed from the source. But some
+     *  files may come from different build environments and should not be
+     *  removed.</p>
+     *  <p>Each entry contains a <i>pattern</i> for a file or folder
+     *  name, and these these patterns follow the syntax as for the
+     *  argument for
+     *  {@link java.nio.file.FileSystem#getPathMatcher(String)},
+     *  only that the syntax prefix @quot;{@code glob:}&quot; can be
+     *  omitted.</p>
+     *  <p>All names are relative to the repository's root folder.</p>
+     *
+     *  @return The
+     *      {@link Property}
+     *      for the &quot;keep&quot; list.
+     */
+    public abstract ListProperty<String> getKeep();
+
+    /**
      *  The folder with the files that are published in the root of the Git
      *  repository (for example the {@code README.md}).
      *
