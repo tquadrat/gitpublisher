@@ -14,6 +14,8 @@ Basically, it works like this:
  4. Push the repository.
  5. Cleanup by removing the temporary folder.
 
+If a file is in the Git repository, but not in the set of files that should be copied to the repository, that file will be deleted. Sometimes this is unwanted, for example for builds that have to run on different native platforms, as this quite often the easiest setup for JavaFX programs. As a solution, those files can be listed with the `keep` property – see below.
+
 ## Documentation
 The [Javadoc Reference Documentation](https://tquadrat.github.io/gitpublisher/javadoc/index.html) gives some more insight.
 
@@ -57,6 +59,12 @@ The [Javadoc Reference Documentation](https://tquadrat.github.io/gitpublisher/ja
             "# structure as sourcesList, above.",
             ".git/**"
         ]
+        keep = [
+            "# This is a list of files from the repository that should not be",
+            "# removed, even they do not have a corresponding file in the", 
+            "# sources. Again, it has the same structure as sourcesList.",
+            "build/distributions/Lib-arm.jar"
+        ]    
         mustCleanupFlag = true // If set to false, the localRepositoryFolder will
             // be kept after the plugin has finished.
         metaDir = new File( """

@@ -7,7 +7,7 @@ import org.gradle.testfixtures.ProjectBuilder
 import spock.lang.Specification
 
 /**
- * A simple unit test for the 'org.tquadrat.foundation.gradle.gitpublisher.greeting' plugin.
+ * A simple unit test for the 'org.tquadrat.foundation.gradle.gitpublisher.publishToGIT' plugin.
  */
 class GITPublisherPluginTest extends Specification {
     def "plugin registers task"() {

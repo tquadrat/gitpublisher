@@ -31,7 +31,7 @@ import org.gradle.api.specs.Spec;
 /**
  *  Publishes a project to GitHub.
  *
- *  @version $Id: GITPublisherPlugin.java 959 2022-01-02 23:09:45Z tquadrat $
+ *  @version $Id: GITPublisherPlugin.java 996 2022-01-23 01:11:48Z tquadrat $
  *  @author Thomas Thrien - thomas.thrien@tquadrat.org
  */
 @SuppressWarnings( "unused" )
@@ -118,11 +118,11 @@ public final class GITPublisherPlugin implements Plugin<Project>
      *  if the <code><i>syntax</i>:</code> prefix is missing, it will be set to
      *  &quot;{@code glob:}&quot;.</p>
      */
-    private static final Collection<String> ALWAYS_IGNORED_FILES_AND_FOLDER;
+    private static final Collection<String> ALWAYS_IGNORED_FILES_AND_FOLDERS;
 
     static
     {
-        ALWAYS_IGNORED_FILES_AND_FOLDER = List.of( ".git/**" );
+        ALWAYS_IGNORED_FILES_AND_FOLDERS = List.of( ".git/**", "regex:.*~" );
     }
 
         /*---------*\
@@ -141,7 +141,7 @@ public final class GITPublisherPlugin implements Plugin<Project>
     public static final Collection<PathMatcher> alwaysIgnored()
     {
         final var fileSystem = FileSystems.getDefault();
-        final var retValue = ALWAYS_IGNORED_FILES_AND_FOLDER.stream()
+        final var retValue = ALWAYS_IGNORED_FILES_AND_FOLDERS.stream()
             .filter( Objects::nonNull )
             .filter( p -> !p.isBlank() )
             .map( p -> p.startsWith( "glob:" ) || p.startsWith( "regex:" ) ? p : "glob:%s".formatted( p ) )

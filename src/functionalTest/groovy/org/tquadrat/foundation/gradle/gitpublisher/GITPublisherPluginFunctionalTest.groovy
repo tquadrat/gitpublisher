@@ -85,7 +85,7 @@ String gitUsername = credentials.forKey( 'tquadratGitHubUser' )
 String gitPassword = credentials.forKey( 'tquadratGitHubPassword' )
 
 tasks.named( 'publishToGIT' ) {
-    commitMessage = "Commit"
+    commitMessage = new File( project.projectDir, "gitMessage.txt" ).getText()
     username = gitUsername
     password = gitPassword
     debugFlag = ${debug}

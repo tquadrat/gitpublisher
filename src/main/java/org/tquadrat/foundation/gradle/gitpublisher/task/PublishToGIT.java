@@ -68,7 +68,7 @@ import org.tquadrat.foundation.gradle.gitpublisher.GitPublisherException;
  *  The definition of the task that does the work for the plugin
  *  {@link org.tquadrat.foundation.gradle.gitpublisher.GITPublisherPlugin}.
  *
- *  @version $Id: PublishToGIT.java 964 2022-01-03 12:06:13Z tquadrat $
+ *  @version $Id: PublishToGIT.java 994 2022-01-20 22:19:47Z tquadrat $
  *  @author Thomas Thrien - thomas.thrien@tquadrat.org
  */
 public abstract class PublishToGIT extends DefaultTask

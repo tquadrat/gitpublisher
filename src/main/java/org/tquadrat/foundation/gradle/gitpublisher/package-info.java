@@ -16,9 +16,9 @@
  */
 
 /**
- *  {@summary The implementation for a Gradle plugin that publishes the
+ *  <p>{@summary The implementation for a Gradle plugin that publishes the
  *  artifacts of a project to a Git repository} (e.g. GitHub), although the
- *  project development itself is not hosted there.
+ *  project development itself is not hosted there.</p>
  */
 
 package org.tquadrat.foundation.gradle.gitpublisher;
