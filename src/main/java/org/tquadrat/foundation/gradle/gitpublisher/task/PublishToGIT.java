@@ -23,6 +23,7 @@ import static java.lang.System.out;
 import static java.nio.file.StandardCopyOption.COPY_ATTRIBUTES;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 import static java.util.Objects.requireNonNull;
+import static org.gradle.api.tasks.PathSensitivity.ABSOLUTE;
 import static org.tquadrat.foundation.gradle.gitpublisher.GITPublisherPlugin.ALWAYS_FALSE_SPEC;
 import static org.tquadrat.foundation.gradle.gitpublisher.GITPublisherPlugin.BASE_FOLDER_DEFAULT;
 import static org.tquadrat.foundation.gradle.gitpublisher.GITPublisherPlugin.GROUP;
@@ -60,7 +61,10 @@ import org.gradle.api.provider.Property;
 import org.gradle.api.provider.Provider;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputDirectory;
+import org.gradle.api.tasks.PathSensitive;
+import org.gradle.api.tasks.PathSensitivity;
 import org.gradle.api.tasks.TaskAction;
+import org.gradle.work.DisableCachingByDefault;
 import org.tquadrat.foundation.gradle.gitpublisher.GITPublisherPlugin;
 import org.tquadrat.foundation.gradle.gitpublisher.GitPublisherException;
 
@@ -71,6 +75,7 @@ import org.tquadrat.foundation.gradle.gitpublisher.GitPublisherException;
  *  @version $Id: PublishToGIT.java 994 2022-01-20 22:19:47Z tquadrat $
  *  @author Thomas Thrien - thomas.thrien@tquadrat.org
  */
+@DisableCachingByDefault
 public abstract class PublishToGIT extends DefaultTask
 {
         /*-----------*\
@@ -309,6 +314,7 @@ public abstract class PublishToGIT extends DefaultTask
      *      for the location of the Javadoc location.
      */
     @InputDirectory
+    @PathSensitive( ABSOLUTE )
     @org.gradle.api.tasks.Optional
     public abstract Property<File> getJavadocLocation();
 
@@ -356,6 +362,7 @@ public abstract class PublishToGIT extends DefaultTask
      *      for the meta folder.
      */
     @InputDirectory
+    @PathSensitive( ABSOLUTE )
     @org.gradle.api.tasks.Optional
     public abstract Property<File> getMetaDir();
 

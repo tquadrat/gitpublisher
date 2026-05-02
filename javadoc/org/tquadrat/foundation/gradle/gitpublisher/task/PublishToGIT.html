@@ -108,7 +108,8 @@ loadScripts(document, 'script');</script>
 </dl>
 <hr>
 <div class="horizontal-scroll">
-<div class="type-signature"><span class="modifiers">public abstract class </span><span class="element-name type-name-label">PublishToGIT</span>
+<div class="type-signature"><span class="annotations">@DisableCachingByDefault
+</span><span class="modifiers">public abstract class </span><span class="element-name type-name-label">PublishToGIT</span>
 <span class="extends-implements">extends org.gradle.api.DefaultTask</span></div>
 <div class="block">The definition of the task that does the work for the plugin
 <a href="../GITPublisherPlugin.html" title="Klasse in org.tquadrat.foundation.gradle.gitpublisher"><code>GITPublisherPlugin</code></a>.</div>
@@ -432,6 +433,7 @@ omitted.</p>
 <h3>getJavadocLocation</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="annotations">@InputDirectory
+@PathSensitive(ABSOLUTE)
 @Optional
 </span><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">org.gradle.api.provider.Property&lt;<a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/io/File.html" title="Klasse oder Schnittstelle in java.io" class="external-link">File</a>&gt;</span>&nbsp;<span class="element-name">getJavadocLocation</span>()</div>
 <div class="block"><p>Returns the Javadoc location. The contents of the given
@@ -498,6 +500,7 @@ omitted.</p>
 <h3>getMetaDir</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="annotations">@InputDirectory
+@PathSensitive(ABSOLUTE)
 @Optional
 </span><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">org.gradle.api.provider.Property&lt;<a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/io/File.html" title="Klasse oder Schnittstelle in java.io" class="external-link">File</a>&gt;</span>&nbsp;<span class="element-name">getMetaDir</span>()</div>
 <div class="block">The folder with the files that are published in the root of the Git
