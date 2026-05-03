@@ -83,7 +83,8 @@ plugins {
 
 String gitUsername = credentials.forKey( 'tquadratGitHubUser' )
 String gitPassword = credentials.forKey( 'tquadratGitHubPassword' )
-
+version = "0.25.0"
+        
 tasks.named( 'publishToGIT' ) {
     commitMessage = new File( project.projectDir, "gitMessage.txt" ).getText()
     username = gitUsername
