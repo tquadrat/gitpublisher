@@ -1,3 +1,4 @@
 org.tquadrat.foundation.gradle.gitpublisher
 org.tquadrat.foundation.gradle.gitpublisher.extension
 org.tquadrat.foundation.gradle.gitpublisher.task
+org.tquadrat.foundation.gradle.gitpublisher.util

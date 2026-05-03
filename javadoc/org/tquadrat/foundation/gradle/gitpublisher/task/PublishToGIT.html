@@ -78,12 +78,12 @@ loadScripts(document, 'script');</script>
 <li><a href="#getKeep()" tabindex="0">getKeep()</a></li>
 <li><a href="#getLocalRepositoryFolder()" tabindex="0">getLocalRepositoryFolder()</a></li>
 <li><a href="#getMetaDir()" tabindex="0">getMetaDir()</a></li>
+<li><a href="#getMustCleanupFlag()" tabindex="0">getMustCleanupFlag()</a></li>
 <li><a href="#getPassword()" tabindex="0">getPassword()</a></li>
 <li><a href="#getRemoteRepositoryURI()" tabindex="0">getRemoteRepositoryURI()</a></li>
 <li><a href="#getSourcesList()" tabindex="0">getSourcesList()</a></li>
 <li><a href="#getUsername()" tabindex="0">getUsername()</a></li>
 <li><a href="#getWorkFolder()" tabindex="0">getWorkFolder()</a></li>
-<li><a href="#getMustCleanupFlag()" tabindex="0">getMustCleanupFlag()</a></li>
 <li><a href="#publish()" tabindex="0">publish()</a></li>
 </ol>
 </li>
@@ -256,7 +256,7 @@ Git repository.</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#publish()" class="member-name-link">publish</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Publishes the artifacts to the specified Git repository.</div>
+<div class="block">Publishes the artefacts to the specified Git repository.</div>
 </div>
 </div>
 </div>
@@ -385,7 +385,7 @@ Git repository.</div>
 <div class="member-signature"><span class="annotations">@Input
 @Optional
 </span><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">org.gradle.api.provider.Property&lt;<a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/Boolean.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Boolean</a>&gt;</span>&nbsp;<span class="element-name">getDryRunFlag</span>()</div>
-<div class="block">The "DryRun" flag. No cleanup is performed after a dry-run.</div>
+<div class="block">The "DryRun" flag. No clean-up is performed after a dry-run.</div>
 <dl class="notes">
 <dt>Gibt zurück:</dt>
 <dd>If the
@@ -413,8 +413,7 @@ Git repository.</div>
 <div class="block"><p>The names of the files and folders that will not be
 published.</p>
 <p>In fact each of this list is a <i>pattern</i> for a file or folder
-name, and these these patterns follow the syntax as for the argument
-for
+name, and these patterns follow the syntax as for the argument for
 <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/nio/file/FileSystem.html#getPathMatcher(java.lang.String)" title="Klasse oder Schnittstelle in java.nio.file" class="external-link"><code>FileSystem.getPathMatcher(String)</code></a>,
 only that the syntax prefix @quot;<code>glob:</code>&quot; can be
 omitted.</p>
@@ -463,8 +462,7 @@ assumption is that such a file was removed from the source. But some
 files may come from different build environments and should not be
 removed.</p>
 <p>Each entry contains a <i>pattern</i> for a file or folder
-name, and these these patterns follow the syntax as for the
-argument for
+name, and these patterns follow the syntax as for the argument for
 <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/nio/file/FileSystem.html#getPathMatcher(java.lang.String)" title="Klasse oder Schnittstelle in java.nio.file" class="external-link"><code>FileSystem.getPathMatcher(String)</code></a>,
 only that the syntax prefix @quot;<code>glob:</code>&quot; can be
 omitted.</p>
@@ -515,6 +513,24 @@ repository (for example the <code>README.MD</code>).</div>
 </section>
 </li>
 <li>
+<section class="detail" id="getMustCleanupFlag()">
+<h3>getMustCleanupFlag</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="annotations">@Input
+@Optional
+</span><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">org.gradle.api.provider.Property&lt;<a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/Boolean.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Boolean</a>&gt;</span>&nbsp;<span class="element-name">getMustCleanupFlag</span>()</div>
+<div class="block">The flag that indicates whether the temporary repository has to be
+ removed in the end.</div>
+<dl class="notes">
+<dt>Gibt zurück:</dt>
+<dd>The
+     <code>Property</code>
+     for the flag.</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
 <section class="detail" id="getPassword()">
 <h3>getPassword</h3>
 <div class="horizontal-scroll">
@@ -555,8 +571,7 @@ repository (for example the <code>README.MD</code>).</div>
 </span><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">org.gradle.api.provider.ListProperty&lt;<a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name">getSourcesList</span>()</div>
 <div class="block"><p>The names of the files and folders to publish.</p>
 <p>In fact each entry contains a <i>pattern</i> for a file or folder
-name, and these these patterns follow the syntax as for the
-argument for
+name, and these patterns follow the syntax as for the argument for
 <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/nio/file/FileSystem.html#getPathMatcher(java.lang.String)" title="Klasse oder Schnittstelle in java.nio.file" class="external-link"><code>FileSystem.getPathMatcher(String)</code></a>,
 only that the syntax prefix @quot;<code>glob:</code>&quot; can be
 omitted.</p>
@@ -601,30 +616,12 @@ Git repository.</p>
 the folder is relative to the
 project root.</p>
 <p>This folder will be created if it does not exist, but it will not
-be deleted on cleanup.</p></div>
+be deleted on clean-up.</p></div>
 <dl class="notes">
 <dt>Gibt zurück:</dt>
 <dd>The
     <code>Property</code>
     for the work folder.</dd>
-</dl>
-</div>
-</section>
-</li>
-<li>
-<section class="detail" id="getMustCleanupFlag()">
-<h3>getMustCleanupFlag</h3>
-<div class="horizontal-scroll">
-<div class="member-signature"><span class="annotations">@Input
-@Optional
-</span><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">org.gradle.api.provider.Property&lt;<a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/Boolean.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Boolean</a>&gt;</span>&nbsp;<span class="element-name">getMustCleanupFlag</span>()</div>
-<div class="block">The flag that indicates whether the temporary repository has to be
- removed in the end.</div>
-<dl class="notes">
-<dt>Gibt zurück:</dt>
-<dd>The
-     <code>Property</code>
-     for the flag.</dd>
 </dl>
 </div>
 </section>
@@ -636,7 +633,7 @@ be deleted on cleanup.</p></div>
 <div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">publish</span>()
                    throws <span class="exceptions">org.eclipse.jgit.api.errors.GitAPIException,
 <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/io/IOException.html" title="Klasse oder Schnittstelle in java.io" class="external-link">IOException</a></span></div>
-<div class="block">Publishes the artifacts to the specified Git repository.</div>
+<div class="block">Publishes the artefacts to the specified Git repository.</div>
 <dl class="notes">
 <dt>Löst aus:</dt>
 <dd><code>org.eclipse.jgit.api.errors.GitAPIException</code> - A Git operation failed</dd>

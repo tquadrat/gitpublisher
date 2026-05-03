@@ -20,8 +20,11 @@ package org.tquadrat.foundation.gradle.gitpublisher.task;
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 import static java.lang.System.out;
+import static java.nio.file.LinkOption.NOFOLLOW_LINKS;
 import static java.nio.file.StandardCopyOption.COPY_ATTRIBUTES;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
+import static java.nio.file.StandardOpenOption.CREATE;
+import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
 import static java.util.Objects.requireNonNull;
 import static org.gradle.api.tasks.PathSensitivity.ABSOLUTE;
 import static org.tquadrat.foundation.gradle.gitpublisher.GITPublisherPlugin.ALWAYS_FALSE_SPEC;
@@ -30,19 +33,27 @@ import static org.tquadrat.foundation.gradle.gitpublisher.GITPublisherPlugin.GRO
 import static org.tquadrat.foundation.gradle.gitpublisher.GITPublisherPlugin.META_DIR_NAME;
 import static org.tquadrat.foundation.gradle.gitpublisher.GITPublisherPlugin.TARGET_NAME;
 import static org.tquadrat.foundation.gradle.gitpublisher.GITPublisherPlugin.alwaysIgnored;
+import static org.tquadrat.foundation.gradle.gitpublisher.util.Template.VARNAME_Now;
+import static org.tquadrat.foundation.gradle.gitpublisher.util.Template.VARNAME_Version;
 
 import javax.inject.Inject;
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.PathMatcher;
+import java.nio.file.attribute.FileTime;
+import java.time.Instant;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Supplier;
@@ -62,17 +73,17 @@ import org.gradle.api.provider.Provider;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputDirectory;
 import org.gradle.api.tasks.PathSensitive;
-import org.gradle.api.tasks.PathSensitivity;
 import org.gradle.api.tasks.TaskAction;
 import org.gradle.work.DisableCachingByDefault;
 import org.tquadrat.foundation.gradle.gitpublisher.GITPublisherPlugin;
 import org.tquadrat.foundation.gradle.gitpublisher.GitPublisherException;
+import org.tquadrat.foundation.gradle.gitpublisher.util.Template;
 
 /**
  *  The definition of the task that does the work for the plugin
  *  {@link org.tquadrat.foundation.gradle.gitpublisher.GITPublisherPlugin}.
  *
- *  @version $Id: PublishToGIT.java 994 2022-01-20 22:19:47Z tquadrat $
+ *  @version $Id: PublishToGIT.java 1221 2026-05-03 12:20:32Z tquadrat $
  *  @author Thomas Thrien - thomas.thrien@tquadrat.org
  */
 @DisableCachingByDefault
@@ -190,16 +201,17 @@ public abstract class PublishToGIT extends DefaultTask
      *  @throws IOException Cannot collect the files from the given source
      *      folder.
      */
-    private static void createFileList( final Builder<Path> builder, final Path baseFolder, final Path source)  throws IOException
+    private static void createFileList( final Builder<Path> builder, final Path baseFolder, final Path source ) throws IOException
     {
-
         //---* Get the folder's contents first *-------------------------------
+        @SuppressWarnings( "resource" )
         final var moreSources = Files.list( source )
             .filter( Files::isDirectory )
             .toList();
         for( final var folder : moreSources ) createFileList( builder, baseFolder, folder ) ;
 
         //---* Add the files *-------------------------------------------------
+        //noinspection resource
         Files.list( source ).filter( p -> !Files.isDirectory( p ) )
             .map( baseFolder::relativize )
             .forEach( builder::add );
@@ -218,6 +230,7 @@ public abstract class PublishToGIT extends DefaultTask
         if( Files.isDirectory( requireNonNull( folder, "folder is null" ) ) )
         {
             //---* Delete the folder contents *--------------------------------
+            //noinspection resource
             for( final var file : Files.list( folder ).toList() )
             {
                 if( !Files.isDirectory( file ) )
@@ -271,7 +284,7 @@ public abstract class PublishToGIT extends DefaultTask
     public abstract Property<Boolean> getDebugFlag();
 
     /**
-     *  {@summary The "DryRun" flag.} No cleanup is performed after a dry-run.
+     *  {@summary The "DryRun" flag.} No clean-up is performed after a dry-run.
      *
      *  @return If the
      *      {@link Property}
@@ -289,8 +302,7 @@ public abstract class PublishToGIT extends DefaultTask
      *  <p>{@summary The names of the files and folders that will not be
      *  published.}</p>
      *  <p>In fact each of this list is a <i>pattern</i> for a file or folder
-     *  name, and these these patterns follow the syntax as for the argument
-     *  for
+     *  name, and these patterns follow the syntax as for the argument for
      *  {@link java.nio.file.FileSystem#getPathMatcher(String)},
      *  only that the syntax prefix @quot;{@code glob:}&quot; can be
      *  omitted.</p>
@@ -327,8 +339,7 @@ public abstract class PublishToGIT extends DefaultTask
      *  files may come from different build environments and should not be
      *  removed.</p>
      *  <p>Each entry contains a <i>pattern</i> for a file or folder
-     *  name, and these these patterns follow the syntax as for the
-     *  argument for
+     *  name, and these patterns follow the syntax as for the argument for
      *  {@link java.nio.file.FileSystem#getPathMatcher(String)},
      *  only that the syntax prefix @quot;{@code glob:}&quot; can be
      *  omitted.</p>
@@ -367,6 +378,18 @@ public abstract class PublishToGIT extends DefaultTask
     public abstract Property<File> getMetaDir();
 
     /**
+     *  The flag that indicates whether the temporary repository has to be
+     *  removed in the end.
+     *
+     * @return The
+     *      {@link Property}
+     *      for the flag.
+     */
+    @Input
+    @org.gradle.api.tasks.Optional
+    public abstract Property<Boolean> getMustCleanupFlag();
+
+    /**
      *  The password for the access to the Git repository.
      *
      *  @return The
@@ -390,8 +413,7 @@ public abstract class PublishToGIT extends DefaultTask
     /**
      *  <p>{@summary The names of the files and folders to publish.}</p>
      *  <p>In fact each entry contains a <i>pattern</i> for a file or folder
-     *  name, and these these patterns follow the syntax as for the
-     *  argument for
+     *  name, and these patterns follow the syntax as for the argument for
      *  {@link java.nio.file.FileSystem#getPathMatcher(String)},
      *  only that the syntax prefix @quot;{@code glob:}&quot; can be
      *  omitted.</p>
@@ -423,7 +445,7 @@ public abstract class PublishToGIT extends DefaultTask
      *  the folder is relative to the
      *  {@linkplain Project#getRootDir() project root}.</p>
      *  <p>This folder will be created if it does not exist, but it will not
-     *  be deleted on cleanup.</p>
+     *  be deleted on clean-up.</p>
      *
      *  @return The
      *      {@link Property}
@@ -432,18 +454,6 @@ public abstract class PublishToGIT extends DefaultTask
     @Input
     @org.gradle.api.tasks.Optional
     public abstract Property<File> getWorkFolder();
-
-    /**
-     *  The flag that indicates whether the temporary repository has to be
-     *  removed in the end.
-     *
-     * @return The
-     *      {@link Property}
-     *      for the flag.
-     */
-    @Input
-    @org.gradle.api.tasks.Optional
-    public abstract Property<Boolean> getMustCleanupFlag();
 
     /**
      *  <p>{@summary Checks whether the given file is included in the
@@ -501,6 +511,7 @@ public abstract class PublishToGIT extends DefaultTask
     private static final void listFiles( final Path baseFolder, final Path source ) throws IOException
     {
         final List<Path> moreSources = new ArrayList<>();
+        //noinspection resource
         Files.list( source ).peek( entry ->
             {
                 if( Files.isDirectory( entry ) ) moreSources.add( entry );
@@ -536,7 +547,7 @@ public abstract class PublishToGIT extends DefaultTask
     }   //  printStatus()
 
     /**
-     *  Publishes the artifacts to the specified Git repository.
+     *  Publishes the artefacts to the specified Git repository.
      *
      *  @throws GitAPIException A Git operation failed
      *  @throws IOException A file operation failed.
@@ -794,7 +805,11 @@ public abstract class PublishToGIT extends DefaultTask
         final var metaFolder = getMetaDir().getOrElse( new File( project.getProjectDir(), META_DIR_NAME ) ).toPath();
         if( Files.exists( metaFolder ) )
         {
-            for( final var path : createFileList( metaFolder, List.of(), excludes ) )
+            final var readme = metaFolder.getFileName().resolve( "README.md" );
+            final List<PathMatcher> metaFolderExcludes = new ArrayList<>( excludes );
+            final PathMatcher excludeReadme = p -> !p.endsWith( readme );
+            metaFolderExcludes.add( excludeReadme );
+            for( final var path : createFileList( metaFolder, List.of(), metaFolderExcludes ) )
             {
                 final var source = metaFolder.resolve( path );
                 final var target = targetFolder.resolve( path );
@@ -802,6 +817,26 @@ public abstract class PublishToGIT extends DefaultTask
                 Files.copy( source, target, REPLACE_EXISTING, COPY_ATTRIBUTES );
                 Files.setLastModifiedTime( target, Files.getLastModifiedTime( source ) );
                 filesToCopy.add( path );
+            }
+
+            //---* Process README.md *-----------------------------------------
+            final var source = metaFolder.resolve( readme.getFileName() );
+            if( Files.exists( source ) )
+            {
+                final Map<String,Object> replacements = Map.of(
+                    VARNAME_Now, ZonedDateTime.now().format( DateTimeFormatter.ISO_ZONED_DATE_TIME ),
+                    VARNAME_Version, getProject().getVersion()
+                );
+
+                final Map<String,Object> attributes = Files.readAttributes( source, "posix:owner,lastAccessTime,creationTime,permissions,group", NOFOLLOW_LINKS );
+                final var contents = new Template( Files.readString( source, StandardCharsets.UTF_8 ) );
+                final var target = targetFolder.resolve( readme.getFileName() );
+                Files.writeString( target, contents.replaceVariable( replacements ), StandardCharsets.UTF_8, CREATE, TRUNCATE_EXISTING );
+                for( final var attribute : attributes.entrySet() )
+                {
+                    Files.setAttribute( target, "posix:%s".formatted( attribute.getKey() ), attribute.getValue(), NOFOLLOW_LINKS );
+                }
+                Files.setLastModifiedTime( target, FileTime.from( Instant.now() ) );
             }
         }
 

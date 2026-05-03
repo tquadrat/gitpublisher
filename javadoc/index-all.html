@@ -49,7 +49,7 @@ loadScripts(document, 'script');</script>
 <div class="header">
 <h1>Index</h1>
 </div>
-<a href="#I:A">A</a>&nbsp;<a href="#I:B">B</a>&nbsp;<a href="#I:G">G</a>&nbsp;<a href="#I:I">I</a>&nbsp;<a href="#I:M">M</a>&nbsp;<a href="#I:O">O</a>&nbsp;<a href="#I:P">P</a>&nbsp;<a href="#I:T">T</a>&nbsp;<br><a href="allclasses-index.html">Alle&nbsp;Klassen&nbsp;und&nbsp;Schnittstellen</a><span class="vertical-separator">|</span><a href="allpackages-index.html">Alle&nbsp;Packages</a><span class="vertical-separator">|</span><a href="constant-values.html">Konstantenfeldwerte</a><span class="vertical-separator">|</span><a href="serialized-form.html">Serialisierte&nbsp;Form</a>
+<a href="#I:A">A</a>&nbsp;<a href="#I:B">B</a>&nbsp;<a href="#I:G">G</a>&nbsp;<a href="#I:I">I</a>&nbsp;<a href="#I:M">M</a>&nbsp;<a href="#I:O">O</a>&nbsp;<a href="#I:P">P</a>&nbsp;<a href="#I:R">R</a>&nbsp;<a href="#I:T">T</a>&nbsp;<a href="#I:V">V</a>&nbsp;<br><a href="allclasses-index.html">Alle&nbsp;Klassen&nbsp;und&nbsp;Schnittstellen</a><span class="vertical-separator">|</span><a href="allpackages-index.html">Alle&nbsp;Packages</a><span class="vertical-separator">|</span><a href="constant-values.html">Konstantenfeldwerte</a><span class="vertical-separator">|</span><a href="serialized-form.html">Serialisierte&nbsp;Form</a>
 <h2 class="title" id="I:A">A</h2>
 <dl class="index">
 <dt><a href="org/tquadrat/foundation/gradle/gitpublisher/GITPublisherPlugin.html#ALWAYS_FALSE_SPEC" class="member-name-link">ALWAYS_FALSE_SPEC</a> - Statische Variable in Klasse org.tquadrat.foundation.gradle.gitpublisher.<a href="org/tquadrat/foundation/gradle/gitpublisher/GITPublisherPlugin.html" title="Klasse in org.tquadrat.foundation.gradle.gitpublisher">GITPublisherPlugin</a></dt>
@@ -284,12 +284,16 @@ artifacts of a project to a Git repository</div>
 <dd>
 <div class="block">The tasks for the Git publisher plugin.</div>
 </dd>
+<dt><a href="org/tquadrat/foundation/gradle/gitpublisher/util/package-summary.html">org.tquadrat.foundation.gradle.gitpublisher.util</a> - Package org.tquadrat.foundation.gradle.gitpublisher.util</dt>
+<dd>
+<div class="block">Some utility classes.</div>
+</dd>
 </dl>
 <h2 class="title" id="I:P">P</h2>
 <dl class="index">
 <dt><a href="org/tquadrat/foundation/gradle/gitpublisher/task/PublishToGIT.html#publish()" class="member-name-link">publish()</a> - Methode in Klasse org.tquadrat.foundation.gradle.gitpublisher.task.<a href="org/tquadrat/foundation/gradle/gitpublisher/task/PublishToGIT.html" title="Klasse in org.tquadrat.foundation.gradle.gitpublisher.task">PublishToGIT</a></dt>
 <dd>
-<div class="block">Publishes the artifacts to the specified Git repository.</div>
+<div class="block">Publishes the artefacts to the specified Git repository.</div>
 </dd>
 <dt><a href="org/tquadrat/foundation/gradle/gitpublisher/GITPublisherBasePlugin.html#PUBLISH_TASK" class="member-name-link">PUBLISH_TASK</a> - Statische Variable in Klasse org.tquadrat.foundation.gradle.gitpublisher.<a href="org/tquadrat/foundation/gradle/gitpublisher/GITPublisherBasePlugin.html" title="Klasse in org.tquadrat.foundation.gradle.gitpublisher">GITPublisherBasePlugin</a></dt>
 <dd>
@@ -305,6 +309,15 @@ artifacts of a project to a Git repository</div>
 <div class="block">Creates a new instance for <code>PublishToGIT</code>.</div>
 </dd>
 </dl>
+<h2 class="title" id="I:R">R</h2>
+<dl class="index">
+<dt><a href="org/tquadrat/foundation/gradle/gitpublisher/util/Template.html#replaceVariable(java.util.Map...)" class="member-name-link">replaceVariable(Map...)</a> - Methode in Klasse org.tquadrat.foundation.gradle.gitpublisher.util.<a href="org/tquadrat/foundation/gradle/gitpublisher/util/Template.html" title="Klasse in org.tquadrat.foundation.gradle.gitpublisher.util">Template</a></dt>
+<dd>
+<div class="block">Replaces the variables of the form
+<code>${&lt;<i>name</i>&gt;}</code> in the adjusted template with
+values from the given maps and returns it after formatting the result.</div>
+</dd>
+</dl>
 <h2 class="title" id="I:T">T</h2>
 <dl class="index">
 <dt><a href="org/tquadrat/foundation/gradle/gitpublisher/GITPublisherPlugin.html#TARGET_NAME" class="member-name-link">TARGET_NAME</a> - Statische Variable in Klasse org.tquadrat.foundation.gradle.gitpublisher.<a href="org/tquadrat/foundation/gradle/gitpublisher/GITPublisherPlugin.html" title="Klasse in org.tquadrat.foundation.gradle.gitpublisher">GITPublisherPlugin</a></dt>
@@ -316,8 +329,35 @@ the Git repository.</div>
 <dd>
 <div class="block">The task name: "publishToGIT".</div>
 </dd>
+<dt><a href="org/tquadrat/foundation/gradle/gitpublisher/util/Template.html" class="type-name-link" title="Klasse in org.tquadrat.foundation.gradle.gitpublisher.util">Template</a> - Klasse in <a href="org/tquadrat/foundation/gradle/gitpublisher/util/package-summary.html">org.tquadrat.foundation.gradle.gitpublisher.util</a></dt>
+<dd>
+<div class="block">An instance of this class is basically a wrapper around a
+String that contains placeholders (&quot;Variables&quot;) in the form
+<code>${&lt;<i>name</i>&gt;}</code>, where &lt;<i>name</i> is the variable
+name.</div>
+</dd>
+<dt><a href="org/tquadrat/foundation/gradle/gitpublisher/util/Template.html#%3Cinit%3E(java.lang.CharSequence)" class="member-name-link">Template(CharSequence)</a> - Konstruktor für Klasse org.tquadrat.foundation.gradle.gitpublisher.util.<a href="org/tquadrat/foundation/gradle/gitpublisher/util/Template.html" title="Klasse in org.tquadrat.foundation.gradle.gitpublisher.util">Template</a></dt>
+<dd>
+<div class="block">Creates a new instance of <code>Template</code>.</div>
+</dd>
 </dl>
-<a href="#I:A">A</a>&nbsp;<a href="#I:B">B</a>&nbsp;<a href="#I:G">G</a>&nbsp;<a href="#I:I">I</a>&nbsp;<a href="#I:M">M</a>&nbsp;<a href="#I:O">O</a>&nbsp;<a href="#I:P">P</a>&nbsp;<a href="#I:T">T</a>&nbsp;<br><a href="allclasses-index.html">Alle&nbsp;Klassen&nbsp;und&nbsp;Schnittstellen</a><span class="vertical-separator">|</span><a href="allpackages-index.html">Alle&nbsp;Packages</a><span class="vertical-separator">|</span><a href="constant-values.html">Konstantenfeldwerte</a><span class="vertical-separator">|</span><a href="serialized-form.html">Serialisierte&nbsp;Form</a></main>
+<h2 class="title" id="I:V">V</h2>
+<dl class="index">
+<dt><a href="org/tquadrat/foundation/gradle/gitpublisher/util/Template.html#VARIABLE_PATTERN" class="member-name-link">VARIABLE_PATTERN</a> - Statische Variable in Klasse org.tquadrat.foundation.gradle.gitpublisher.util.<a href="org/tquadrat/foundation/gradle/gitpublisher/util/Template.html" title="Klasse in org.tquadrat.foundation.gradle.gitpublisher.util">Template</a></dt>
+<dd>
+<div class="block">The regular expression to identify a variable in a char sequence:
+"\\$\\{((?:_)|(?:[~/=%:&amp;]?\\p{IsAlphabetic}(?:\\p{IsAlphabetic}|\\d|_|.)*?))}".</div>
+</dd>
+<dt><a href="org/tquadrat/foundation/gradle/gitpublisher/util/Template.html#VARNAME_Now" class="member-name-link">VARNAME_Now</a> - Statische Variable in Klasse org.tquadrat.foundation.gradle.gitpublisher.util.<a href="org/tquadrat/foundation/gradle/gitpublisher/util/Template.html" title="Klasse in org.tquadrat.foundation.gradle.gitpublisher.util">Template</a></dt>
+<dd>
+<div class="block">The variable name for the current date and time: "now".</div>
+</dd>
+<dt><a href="org/tquadrat/foundation/gradle/gitpublisher/util/Template.html#VARNAME_Version" class="member-name-link">VARNAME_Version</a> - Statische Variable in Klasse org.tquadrat.foundation.gradle.gitpublisher.util.<a href="org/tquadrat/foundation/gradle/gitpublisher/util/Template.html" title="Klasse in org.tquadrat.foundation.gradle.gitpublisher.util">Template</a></dt>
+<dd>
+<div class="block">The variable name for the version: "version".</div>
+</dd>
+</dl>
+<a href="#I:A">A</a>&nbsp;<a href="#I:B">B</a>&nbsp;<a href="#I:G">G</a>&nbsp;<a href="#I:I">I</a>&nbsp;<a href="#I:M">M</a>&nbsp;<a href="#I:O">O</a>&nbsp;<a href="#I:P">P</a>&nbsp;<a href="#I:R">R</a>&nbsp;<a href="#I:T">T</a>&nbsp;<a href="#I:V">V</a>&nbsp;<br><a href="allclasses-index.html">Alle&nbsp;Klassen&nbsp;und&nbsp;Schnittstellen</a><span class="vertical-separator">|</span><a href="allpackages-index.html">Alle&nbsp;Packages</a><span class="vertical-separator">|</span><a href="constant-values.html">Konstantenfeldwerte</a><span class="vertical-separator">|</span><a href="serialized-form.html">Serialisierte&nbsp;Form</a></main>
 </div>
 </body>
 </html>
