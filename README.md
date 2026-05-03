@@ -1,4 +1,4 @@
-# gitpublisher
+# gitpublisher unspecified
 
 I still have a strong preference for Subversion as my source code repository, and for my (private) projects, I have set up a private Subversion server somewhere in the internet.
 
