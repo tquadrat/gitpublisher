@@ -83,7 +83,7 @@ import org.tquadrat.foundation.gradle.gitpublisher.util.Template;
  *  The definition of the task that does the work for the plugin
  *  {@link org.tquadrat.foundation.gradle.gitpublisher.GITPublisherPlugin}.
  *
- *  @version $Id: PublishToGIT.java 1221 2026-05-03 12:20:32Z tquadrat $
+ *  @version $Id: PublishToGIT.java 1223 2026-05-03 13:07:17Z tquadrat $
  *  @author Thomas Thrien - thomas.thrien@tquadrat.org
  */
 @DisableCachingByDefault
@@ -807,7 +807,7 @@ public abstract class PublishToGIT extends DefaultTask
         {
             final var readme = metaFolder.getFileName().resolve( "README.md" );
             final List<PathMatcher> metaFolderExcludes = new ArrayList<>( excludes );
-            final PathMatcher excludeReadme = p -> !p.endsWith( readme );
+            final PathMatcher excludeReadme = p -> p.endsWith( readme );
             metaFolderExcludes.add( excludeReadme );
             for( final var path : createFileList( metaFolder, List.of(), metaFolderExcludes ) )
             {

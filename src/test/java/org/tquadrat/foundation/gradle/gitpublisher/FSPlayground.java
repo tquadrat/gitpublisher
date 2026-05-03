@@ -29,7 +29,7 @@ import java.util.StringJoiner;
  *  <p>{@summary Having some fun with the filesystem.}</p>
  *
  *  @author Thomas Thrien - thomas.thrien@tquadrat.org
- *  @version $Id: HexUtils.java 747 2020-12-01 12:40:38Z tquadrat $
+ *  @version $Id: FSPlayground.java 1223 2026-05-03 13:07:17Z tquadrat $
  *  @since 0.25.0
  *
  */
