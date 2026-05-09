@@ -85,7 +85,7 @@ import org.tquadrat.foundation.gradle.gitpublisher.util.Template;
  *  The definition of the task that does the work for the plugin
  *  {@link org.tquadrat.foundation.gradle.gitpublisher.GITPublisherPlugin}.
  *
- *  @version $Id: PublishToGIT.java 1224 2026-05-03 14:13:03Z tquadrat $
+ *  @version $Id: PublishToGIT.java 1234 2026-05-09 08:00:48Z tquadrat $
  *  @author Thomas Thrien - thomas.thrien@tquadrat.org
  */
 @DisableCachingByDefault

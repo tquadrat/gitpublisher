@@ -31,7 +31,7 @@ import org.tquadrat.foundation.gradle.gitpublisher.GITPublisherPlugin;
  *
  *  The extension for the Git publisher plugin.
  *
- *  @version $Id: GITPublisherExtension.java 994 2022-01-20 22:19:47Z tquadrat $
+ *  @version $Id: GITPublisherExtension.java 1234 2026-05-09 08:00:48Z tquadrat $
  *  @author Thomas Thrien - thomas.thrien@tquadrat.org
  *  @since 0.1.0
  */
