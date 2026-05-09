@@ -23,6 +23,7 @@ import java.net.URI;
 import org.eclipse.jgit.transport.CredentialsProvider;
 import org.gradle.api.Project;
 import org.gradle.api.provider.ListProperty;
+import org.gradle.api.provider.MapProperty;
 import org.gradle.api.provider.Property;
 import org.tquadrat.foundation.gradle.gitpublisher.GITPublisherPlugin;
 
@@ -68,7 +69,7 @@ public abstract class GITPublisherExtension
     public abstract Property<Boolean> getDebugFlag();
 
     /**
-     *  <p>{@summary The "DryRun" flag.} No cleanup is performed after a
+     *  <p>{@summary The "DryRun" flag.} No clean-up is performed after a
      *  dry-run.</p>
      *
      *  @return If the
@@ -94,8 +95,7 @@ public abstract class GITPublisherExtension
      *  <p>{@summary The names of the files and folders that will not be
      *  published.}</p>
      *  <p>In fact each of this list is a <i>pattern</i> for a file or folder
-     *  name, and these these patterns follow the syntax as for the argument
-     *  for
+     *  name, and these patterns follow the syntax as for the argument for
      *  {@link java.nio.file.FileSystem#getPathMatcher(String)},
      *  only that the syntax prefix @quot;{@code glob:}&quot; can be
      *  omitted.</p>
@@ -106,6 +106,18 @@ public abstract class GITPublisherExtension
      *      for the ignores list.
      */
     public abstract ListProperty<String> getIgnoresList();
+
+    /**
+     *  <p>{@summary Returns the inserts for the {@code README.md}.}</p>
+     *  <p>The key for the map is a variable for a
+     *  {@linkplain org.tquadrat.foundation.gradle.gitpublisher.util.Template template}
+     *  insert, the map value will be inserted in the GitHub readme file.</p>
+     *
+     *  @return The
+     *      {@link Property}
+     *      for the inserts.
+     */
+    public abstract MapProperty<String,Object> getInserts();
 
     /**
      *  <p>{@summary Returns the Javadoc location.} The contents of the given
@@ -127,8 +139,7 @@ public abstract class GITPublisherExtension
      *  files may come from different build environments and should not be
      *  removed.</p>
      *  <p>Each entry contains a <i>pattern</i> for a file or folder
-     *  name, and these these patterns follow the syntax as for the
-     *  argument for
+     *  name, and these patterns follow the syntax as for the argument for
      *  {@link java.nio.file.FileSystem#getPathMatcher(String)},
      *  only that the syntax prefix @quot;{@code glob:}&quot; can be
      *  omitted.</p>
@@ -171,8 +182,7 @@ public abstract class GITPublisherExtension
     /**
      *  <p>{@summary The names of the files and folders to publish.}</p>
      *  <p>In fact each entry contains a <i>pattern</i> for a file or folder
-     *  name, and these these patterns follow the syntax as for the
-     *  argument for
+     *  name, and these patterns follow the syntax as for the argument for
      *  {@link java.nio.file.FileSystem#getPathMatcher(String)},
      *  only that the syntax prefix @quot;{@code glob:}&quot; can be
      *  omitted.</p>
@@ -201,7 +211,7 @@ public abstract class GITPublisherExtension
      *  the folder is relative to the
      *  {@linkplain Project#getRootDir() project root}.</p>
      *  <p>This folder will be created if it does not exist, but it will not
-     *  be deleted on cleanup.</p>
+     *  be deleted on clean-up.</p>
      *
      *  @return The
      *      {@link Property}

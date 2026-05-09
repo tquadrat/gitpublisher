@@ -51,6 +51,7 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -68,6 +69,7 @@ import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.Project;
 import org.gradle.api.provider.ListProperty;
+import org.gradle.api.provider.MapProperty;
 import org.gradle.api.provider.Property;
 import org.gradle.api.provider.Provider;
 import org.gradle.api.tasks.Input;
@@ -83,7 +85,7 @@ import org.tquadrat.foundation.gradle.gitpublisher.util.Template;
  *  The definition of the task that does the work for the plugin
  *  {@link org.tquadrat.foundation.gradle.gitpublisher.GITPublisherPlugin}.
  *
- *  @version $Id: PublishToGIT.java 1223 2026-05-03 13:07:17Z tquadrat $
+ *  @version $Id: PublishToGIT.java 1224 2026-05-03 14:13:03Z tquadrat $
  *  @author Thomas Thrien - thomas.thrien@tquadrat.org
  */
 @DisableCachingByDefault
@@ -329,6 +331,20 @@ public abstract class PublishToGIT extends DefaultTask
     @PathSensitive( ABSOLUTE )
     @org.gradle.api.tasks.Optional
     public abstract Property<File> getJavadocLocation();
+
+    /**
+     *  <p>{@summary Returns the inserts for the {@code README.md}.}</p>
+     *  <p>The key for the map is a variable for a
+     *  {@linkplain org.tquadrat.foundation.gradle.gitpublisher.util.Template template}
+     *  insert, the map value will be inserted in the GitHub readme file.</p>
+     *
+     *  @return The
+     *      {@link Property}
+     *      for the inserts.
+     */
+    @Input
+    @org.gradle.api.tasks.Optional
+    public abstract MapProperty<String,Object> getInserts();
 
     /**
      *  <p>{@summary The names of the files and folders to keep in the
@@ -823,10 +839,14 @@ public abstract class PublishToGIT extends DefaultTask
             final var source = metaFolder.resolve( readme.getFileName() );
             if( Files.exists( source ) )
             {
-                final Map<String,Object> replacements = Map.of(
+                final Map<String,Object> replacements = new HashMap<>( Map.of(
                     VARNAME_Now, ZonedDateTime.now().format( DateTimeFormatter.ISO_ZONED_DATE_TIME ),
-                    VARNAME_Version, getProject().getVersion()
+                    VARNAME_Version, getProject().getVersion() )
                 );
+                if( getInserts().isPresent() )
+                {
+                    replacements.putAll( getInserts().get() );
+                }
 
                 final Map<String,Object> attributes = Files.readAttributes( source, "posix:owner,lastAccessTime,creationTime,permissions,group", NOFOLLOW_LINKS );
                 final var contents = new Template( Files.readString( source, StandardCharsets.UTF_8 ) );

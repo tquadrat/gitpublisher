@@ -1,5 +1,5 @@
 # gitpublisher 0.25.0
-Last updated: 2026-05-03T16:00:25.230546377+02:00[Europe/Berlin]
+Last updated: 2026-05-09T09:56:38.731889803+02:00[Europe/Berlin]
 
 I still have a strong preference for Subversion as my source code repository, and for my (private) projects, I have set up a private Subversion server somewhere in the internet.
 
