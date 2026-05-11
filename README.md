@@ -1,5 +1,5 @@
 # gitpublisher 0.25.0
-Last updated: 2026-05-09T10:17:23.50910457+02:00[Europe/Berlin]
+Last updated: 2026-05-11T20:42:10.153968368+02:00[Europe/Berlin]
 
 I still have a strong preference for Subversion as my source code repository, and for my (private) projects, I have set up a private Subversion server somewhere in the internet.
 
@@ -18,7 +18,7 @@ Basically, it works like this:
 If a file is in the Git repository, but not in the set of files that should be copied to the repository, that file will be deleted. Sometimes this is unwanted, for example for builds that have to run on different native platforms, as this quite often the easiest setup for JavaFX programs. As a solution, those files can be listed with the `keep` property – see below.
 
 ## Documentation
-The [Javadoc Reference Documentation](javadoc/index.html) gives some more insight.
+The [Javadoc Reference Documentation](https://tquadrat.github.io/gitpublisher/javadoc/index.html) gives some more insight.
 
 ## Configuration
 
@@ -75,7 +75,8 @@ The [Javadoc Reference Documentation](javadoc/index.html) gives some more insigh
             If specified, the contents of this folder will be copied to the folder
             'javadoc' in the respository. A relative path will be resolved against
             the $PROJECT folder.
-            """  )
+            """ )
+        inserts = Map.of( "Additonal Values", "that are set to README.md" ) 
     } 
     ```
 
@@ -86,3 +87,5 @@ Usually, you have several files and folders in the root of your project that you
 A solution could be to add these files explicitly to the `sourcesList`; or to add the root folder as a whole, and list the unwanted files to the `ignoresList`.
 
 But than I found that sometimes I want to publish another version of a file to the public Git repository than that I use when I build the project in my own environment. So I introduced the `metaDir` folder: all files in that folder are copied to the root of the repository.
+
+One of the files I keep in the 'metaDir' is 'README.md', the file that is used by GitHub to provide a (more or less) brief description of the project. The file may contain placeholders in the format `${<name>}`, where `<name>` stands for an arbitrary String value. For more details, refer to the [Javadoc](javadoc/org/tquadrat/foundation/gradle/gitpublisher/task/PublishToGIT.html#getInserts())

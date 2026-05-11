@@ -85,7 +85,7 @@ import org.tquadrat.foundation.gradle.gitpublisher.util.Template;
  *  The definition of the task that does the work for the plugin
  *  {@link org.tquadrat.foundation.gradle.gitpublisher.GITPublisherPlugin}.
  *
- *  @version $Id: PublishToGIT.java 1234 2026-05-09 08:00:48Z tquadrat $
+ *  @version $Id: PublishToGIT.java 1242 2026-05-11 18:40:30Z tquadrat $
  *  @author Thomas Thrien - thomas.thrien@tquadrat.org
  */
 @DisableCachingByDefault
@@ -337,6 +337,20 @@ public abstract class PublishToGIT extends DefaultTask
      *  <p>The key for the map is a variable for a
      *  {@linkplain org.tquadrat.foundation.gradle.gitpublisher.util.Template template}
      *  insert, the map value will be inserted in the GitHub readme file.</p>
+     *  <p>The names are arbitrary Strings, although the should be limited to
+     *  letters and digits.</p>
+     *  <p>The variables &quot;{@code version}&quot; and
+     *  &quot;{@code now}&quot; are predefined:</p>
+     *  <ul>
+     *      <li>{@code version} – is the current version of the module,
+     *      populated with the return value from calling
+     *      {@link Project#getVersion()}.</li>
+     *      <li>{@code now} – is the date and time of the current build,
+     *      populated through calling
+     *      {@link ZonedDateTime#now()}.</li>
+     *  </ul>
+     *  <p>Setting these variables here again would override their predefined
+     *  values.</p>
      *
      *  @return The
      *      {@link Property}

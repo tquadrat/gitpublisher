@@ -463,7 +463,21 @@ repository.</p></div>
 <div class="block"><p>Returns the inserts for the <code>README.md</code>.</p>
 <p>The key for the map is a variable for a
 <a href="../util/Template.html" title="Klasse in org.tquadrat.foundation.gradle.gitpublisher.util">template</a>
-insert, the map value will be inserted in the GitHub readme file.</p></div>
+insert, the map value will be inserted in the GitHub readme file.</p>
+<p>The names are arbitrary Strings, although the should be limited to
+letters and digits.</p>
+<p>The variables &quot;<code>version</code>&quot; and
+&quot;<code>now</code>&quot; are predefined:</p>
+<ul>
+    <li><code>version</code> – is the current version of the module,
+    populated with the return value from calling
+    <code>Project.getVersion()</code>.</li>
+    <li><code>now</code> – is the date and time of the current build,
+    populated through calling
+    <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/time/ZonedDateTime.html#now()" title="Klasse oder Schnittstelle in java.time" class="external-link"><code>ZonedDateTime.now()</code></a>.</li>
+</ul>
+<p>Setting these variables here again would override their predefined
+values.</p></div>
 <dl class="notes">
 <dt>Gibt zurück:</dt>
 <dd>The
