@@ -18,7 +18,7 @@ Basically, it works like this:
 If a file is in the Git repository, but not in the set of files that should be copied to the repository, that file will be deleted. Sometimes this is unwanted, for example for builds that have to run on different native platforms, as this quite often the easiest setup for JavaFX programs. As a solution, those files can be listed with the `keep` property – see below.
 
 ## Documentation
-The [Javadoc Reference Documentation](https://tquadrat.github.io/gitpublisher/javadoc/index.html) gives some more insight.
+The [Javadoc Reference Documentation](javadoc/index.html) gives some more insight.
 
 ## Configuration
 
